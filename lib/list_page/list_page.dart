@@ -37,7 +37,7 @@ class _ListPageState extends State<ListPage> {
     int daysRemaining = onlyDateSelected.difference(onlyDateToday).inDays;
 
     // 남은 일수  == 0 이면 "D-Day" 아니면 "D-남은일수"
-    return daysRemaining == 0 ? "D-Day" : "D-$daysRemaining";
+    return daysRemaining == 0 ? "Day" : "$daysRemaining";
   }
 
   // 목표 입력
