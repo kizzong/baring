@@ -7,6 +7,8 @@ void main() async {
   await Hive.openBox('Goal'); // 목표
   await Hive.openBox('Date'); // 목표 D-day
 
+  await Hive.openBox('Todo'); // Todo List
+
   runApp(SubMe());
 }
 
