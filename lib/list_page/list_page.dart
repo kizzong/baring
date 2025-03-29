@@ -205,6 +205,7 @@ class _ListPageState extends State<ListPage> {
                 setState(() {
                   db.todoList.clear(); // 리스트 전체 삭제
                 });
+                db.updateDataBase();
                 Navigator.of(context).pop(); // 다이얼로그 닫기
               },
               child: Text("삭제", style: TextStyle(color: Colors.red)),
@@ -213,7 +214,6 @@ class _ListPageState extends State<ListPage> {
         );
       },
     );
-    db.updateDataBase();
   }
 
   @override
@@ -273,14 +273,15 @@ class _ListPageState extends State<ListPage> {
                     child: Text('D-day 설정'))
               ],
             ),
-            SizedBox(height: 50),
-            ElevatedButton(
-                onPressed: () {
-                  print(goalBox.get('Goal'));
-                  print(dateBox.get('Date'));
-                  print(todoBox.get('todo_list'));
-                },
-                child: Text('value')),
+            SizedBox(height: 70),
+            // ElevatedButton(
+            //   onPressed: () {
+            //     print(goalBox.get('Goal'));
+            //     print(dateBox.get('Date'));
+            //     print(todoBox.get('todo_list'));
+            //   },
+            //   child: Text('value'),
+            // ),
             Row(
               children: [
                 SizedBox(width: 270),
