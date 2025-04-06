@@ -279,34 +279,34 @@ class _ListPageState extends State<ListPage> {
     return Scaffold(
       appBar: AppBar(
         title: Row(
-          // mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.asset(
               "assets/logo/baring_bgremove.png",
               height: 95,
               width: 95,
             ),
-            Text(
-              'Baring',
-              style: TextStyle(
-                fontSize: 26,
-                fontWeight: FontWeight.w600,
-                fontStyle: FontStyle.italic,
-              ),
-            ),
+            // Text(
+            //   'Baring',
+            //   style: TextStyle(
+            //     fontSize: 26,
+            //     fontWeight: FontWeight.w600,
+            //     fontStyle: FontStyle.italic,
+            //   ),
+            // ),
           ],
         ),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.person),
-            onPressed: () {
-              // 설정 버튼 클릭 시 동작
-              ScaffoldMessenger.of(
-                context,
-              ).showSnackBar(SnackBar(content: Text("설정 기능은 아직 구현되지 않았습니다.")));
-            },
-          ),
-        ],
+        // actions: [
+        //   IconButton(
+        //     icon: Icon(Icons.person),
+        //     onPressed: () {
+        //       // 설정 버튼 클릭 시 동작
+        //       ScaffoldMessenger.of(
+        //         context,
+        //       ).showSnackBar(SnackBar(content: Text("설정 기능은 아직 구현되지 않았습니다.")));
+        //     },
+        //   ),
+        // ],
       ),
 
       body: SingleChildScrollView(
