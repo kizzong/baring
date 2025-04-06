@@ -1,6 +1,6 @@
+import 'package:baring/list_page/list_page.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:subme2/list_page/list_page.dart';
 
 void main() async {
   await Hive.initFlutter();
@@ -9,22 +9,19 @@ void main() async {
 
   await Hive.openBox('Todo'); // Todo List
 
-  runApp(SubMe());
+  runApp(Baring());
 }
 
-class SubMe extends StatefulWidget {
-  const SubMe({super.key});
+class Baring extends StatefulWidget {
+  const Baring({super.key});
 
   @override
-  State<SubMe> createState() => _SubMeState();
+  State<Baring> createState() => _BaringState();
 }
 
-class _SubMeState extends State<SubMe> {
+class _BaringState extends State<Baring> {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: ListPage(),
-    );
+    return MaterialApp(debugShowCheckedModeBanner: false, home: ListPage());
   }
 }
