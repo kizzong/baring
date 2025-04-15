@@ -153,27 +153,24 @@ class _ListPageState extends State<ListPage> {
     flutterLocalNotificationsPlugin.cancelAll();
 
     // 현재 시간 가져오기
-    final now = DateTime.now();
+    // final now = DateTime.now();
 
     // 새로운 알림 설정 (현재 시간으로부터 1분, 2분 후)
-    scheduleDailyNotification(
-      1,
-      now.hour,
-      now.minute + 1,
-      "1. 오늘의 할 일, 지금 잠깐 확인해볼까요? 👀",
-    );
-    scheduleDailyNotification(
-      2,
-      now.hour,
-      now.minute + 2,
-      "2. 오늘 하루 마무리 전에, 할 일 체크 잊지 마세요 ✅",
-    );
-    scheduleDailyNotification(
-      2,
-      now.hour,
-      now.minute + 3,
-      "3. 오늘 하루 마무리 전에, 할 일 체크 잊지 마세요 ✅",
-    );
+    // scheduleDailyNotification(
+    //   1,
+    //   now.hour,
+    //   now.minute + 1,
+    //   "1. 오늘의 할 일, 지금 잠깐 확인해볼까요? 👀",
+    // );
+    // scheduleDailyNotification(
+    //   2,
+    //   now.hour,
+    //   now.minute + 2,
+    //   "2. 오늘 하루 마무리 전에, 할 일 체크 잊지 마세요 ✅",
+    // );
+
+    scheduleDailyNotification(1, 16, 0, "오늘의 할 일, 지금 잠깐 확인해볼까요? 👀");
+    scheduleDailyNotification(2, 21, 0, "오늘 하루 마무리 전에, 할 일 체크 잊지 마세요 ✅");
   }
 
   // D-day 계산
