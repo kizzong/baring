@@ -25,13 +25,14 @@ class _DialogBoxState extends State<DialogBox> {
   Widget build(BuildContext context) {
     return AlertDialog(
       backgroundColor: Colors.white,
+      title: const Text("✏️  Task 추가"),
       content: SizedBox(
         height: 250,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             const SizedBox(height: 20),
-            const Text("Don't forget this"),
+            const Text("🧠\nDon't forget this ", textAlign: TextAlign.center),
             const SizedBox(height: 30),
             TextField(
               controller: widget.controller,
@@ -65,14 +66,15 @@ class _DialogBoxState extends State<DialogBox> {
                   child: const Text("취소"),
                 ),
                 MaterialButton(
-                  color: isSaveEnabled
-                      ? const Color.fromARGB(255, 153, 209, 255)
-                      : Colors.grey,
+                  color:
+                      isSaveEnabled
+                          ? const Color.fromARGB(255, 153, 209, 255)
+                          : Colors.grey,
                   onPressed: isSaveEnabled ? widget.onSave : null,
                   child: const Text("저장"),
                 ),
               ],
-            )
+            ),
           ],
         ),
       ),

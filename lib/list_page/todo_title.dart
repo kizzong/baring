@@ -24,8 +24,11 @@ class TodoTitle extends StatelessWidget {
           context: context,
           builder: (context) {
             return AlertDialog(
-              title: const Text("삭제 확인"),
-              content: const Text("삭제하시겠습니까?"),
+              title: const Text("❌  Task 삭제"),
+              content: const Text(
+                "\n삭제하시겠습니까? 🤔",
+                textAlign: TextAlign.center,
+              ),
               actions: [
                 TextButton(
                   onPressed: () {
@@ -41,7 +44,7 @@ class TodoTitle extends StatelessWidget {
                     }
                   },
                   child: const Text("삭제"),
-                )
+                ),
               ],
             );
           },
@@ -65,9 +68,10 @@ class TodoTitle extends StatelessWidget {
               return Colors.grey[200];
             }),
             side: const BorderSide(width: 0),
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-          )
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(5),
+            ),
+          ),
         ],
       ),
     );
