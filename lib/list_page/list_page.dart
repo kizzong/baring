@@ -155,20 +155,7 @@ class _ListPageState extends State<ListPage> {
     // 현재 시간 가져오기
     // final now = DateTime.now();
 
-    // 새로운 알림 설정 (현재 시간으로부터 1분, 2분 후)
-    // scheduleDailyNotification(
-    //   1,
-    //   now.hour,
-    //   now.minute + 1,
-    //   "1. 오늘의 할 일, 지금 잠깐 확인해볼까요? 👀",
-    // );
-    // scheduleDailyNotification(
-    //   2,
-    //   now.hour,
-    //   now.minute + 2,
-    //   "2. 오늘 하루 마무리 전에, 할 일 체크 잊지 마세요 ✅",
-    // );
-
+    // 새로운 알림 설정 (4시, 9시)
     scheduleDailyNotification(1, 16, 0, "오늘의 할 일, 지금 잠깐 확인해볼까요? 👀");
     scheduleDailyNotification(2, 21, 0, "오늘 하루 마무리 전에, 할 일 체크 잊지 마세요 ✅");
   }
@@ -191,7 +178,7 @@ class _ListPageState extends State<ListPage> {
     int daysRemaining = onlyDateSelected.difference(onlyDateToday).inDays;
 
     // 남은 일수가 0보다 작으면 "D-0"으로 표시
-    if (daysRemaining <= 0) return "D-0";
+    if (daysRemaining < 0) return "D-0";
 
     // 남은 일수  == 0 이면 "D-Day" 아니면 "D-남은일수"
     return daysRemaining == 0 ? "D-Day !!" : "D-$daysRemaining";
