@@ -36,6 +36,7 @@ class _DialogBoxState extends State<DialogBox> {
             const SizedBox(height: 30),
             TextField(
               controller: widget.controller,
+              autofocus: true,
               decoration: InputDecoration(
                 border: const OutlineInputBorder(),
                 hintText: "2글자 이상 10글자 이하",

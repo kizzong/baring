@@ -114,7 +114,7 @@ class _SettingPageState extends State<SettingPage> {
                 borderRadius: BorderRadius.circular(10),
               ),
               child: SwitchListTile(
-                title: const Text('알림 설정'),
+                title: const Text('알림 설정 '),
                 secondary: const Icon(Icons.notifications, color: Colors.grey),
                 value: isNotificationOn,
                 onChanged: toggleNotification,
@@ -176,7 +176,7 @@ class _SettingPageState extends State<SettingPage> {
                                 ),
                                 ExpansionTile(
                                   title: Text(
-                                    '📝 왜 Task는 3개 제한인가요?',
+                                    '📝 왜 Task는 6개 제한인가요?',
                                     style: TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold,
@@ -190,12 +190,12 @@ class _SettingPageState extends State<SettingPage> {
                                       ),
                                       child: Text(
                                         '처음엔 할 일을 너무 많이 적기보단,\n'
-                                        '딱 3개만 집중해서 해보는 게 좋겠다고 생각했어요.\n\n'
+                                        '딱 6개만 집중해서 해보는 게 좋겠다고 생각했어요.\n\n'
                                         '할 일이 많아지면 오히려 하나하나에 집중하기 어려워지고,\n'
                                         '결국 아무것도 제대로 못할 수 있잖아요?\n\n'
                                         '그래서 바링의 테스트 버전에서는\n'
-                                        '하루에 3개의 할 일만 등록할 수 있도록 했어요!\n'
-                                        '나중에 사용자 반응에 따라 늘려갈 수도 있어요. 😊\n\n',
+                                        '하루에 6개의 할 일만 등록할 수 있도록 했어요!\n'
+                                        '나중에 사용자 반응에 따라 줄이거나 늘려갈 수도 있어요. 😊\n\n',
                                         style: TextStyle(
                                           fontSize: 16,
                                           height: 1.8,
@@ -247,11 +247,23 @@ class _SettingPageState extends State<SettingPage> {
                                         vertical: 12,
                                       ),
                                       child: Text(
-                                        '어느 날 문득, 밖에 있다가 "아! 이거 해야 하는데…" 싶은 생각이 들었는데\n'
-                                        '카톡에 적자니 어색하고,\n메모장은 찾기 귀찮더라고요. 😅\n\n'
-                                        '그래서, 그냥 할 일을 편하게 적고 체크할 수 있는\n'
-                                        '심플한 앱을 만들자! 해서 탄생한 게 바로 "바링"이에요.\n'
-                                        '생각났을 때 바로 기록하고,\n끝내면 깔끔하게 지울 수 있게 만들었어요. 😁\n\n',
+                                        '집에 있을 때는 할 일이 떠오르면\n'
+                                        '포스트잇에 적고, 하나씩 지우면서 정리하곤 했어요.\n\n'
+                                        '그런데 밖에서는 메모장이나 카톡에 적게 되는데,\n'
+                                        '이런 앱들은 한 번 적고 나면 잘 안 보게 되더라고요. 😅\n\n'
+                                        // '그래서\n'
+                                        '“밖에서도 포스트잇처럼 편하게 기록하고,\n'
+                                        '눈에 잘 띄게 해주는 앱이 있었으면 좋겠다!\n'
+                                        '라고 생각했어요 😁\n\n'
+                                        '그렇게 해서 만든 게 바로 할 일 관리 앱, "바링이에요.\n\n'
+                                        '할 일이 떠오를 때 바로 기록하고,\n'
+                                        '하루에 두 번 알림으로 까먹지 않게 도와주고,\n'
+                                        '모두 완료하면 깔끔하게 정리할 수 있도록 만들었어요. 🥳\n\n',
+                                        // '어느 날 문득, 밖에 있다가 "아! 이거 해야 하는데…" 싶은 생각이 들었는데\n'
+                                        // '카톡에 적자니 어색하고,\n메모장은 찾기 귀찮더라고요. 😅\n\n'
+                                        // '그래서, 그냥 할 일을 편하게 적고 체크할 수 있는\n'
+                                        // '심플한 앱을 만들자! 해서 탄생한 게 바로 "바링"이에요.\n'
+                                        // '생각났을 때 바로 기록하고,\n끝내면 깔끔하게 지울 수 있게 만들었어요. 😁\n\n',
                                         style: TextStyle(
                                           fontSize: 16,
                                           height: 1.8,
@@ -276,10 +288,10 @@ class _SettingPageState extends State<SettingPage> {
                                       ),
                                       child: Text(
                                         '테스트 버전 반응이 좋으면,\n이런 기능들도 준비하고 있어요!\n\n'
-                                        '1️⃣ 카테고리별 Task 관리 \n(학교 일정, 개인 일정, 취미 일정 등)\n\n'
-                                        '2️⃣ 성과 캘린더 \n(어떤 일을 언제 했는지 한눈에 보기)\n\n'
-                                        '3️⃣ 커뮤니티 기능 \n(비슷한 목표를 가진 사람들과 소통)\n\n'
-                                        '4️⃣ AI 맞춤 Task 추천 \n(목표와 기간에 맞는 할 일 자동 추천)\n\n',
+                                        '1️⃣ 카테고리별 Task 관리 🗂️ \n(학교 일정, 개인 일정, 취미 일정 등)\n\n'
+                                        '2️⃣ 성과 캘린더 📅\n(어떤 일을 언제 했는지 한눈에 보기)\n\n'
+                                        '3️⃣ 커뮤니티 기능 🧑‍🧑‍🧒‍🧒\n(비슷한 목표를 가진 사람들과 소통)\n\n'
+                                        '4️⃣ AI 맞춤 Task 추천 🤖✨\n(목표와 기간에 맞는 할 일 자동 추천)\n\n',
                                         style: TextStyle(
                                           fontSize: 16,
                                           height: 1.8,

@@ -39,6 +39,18 @@ class _ListPageState extends State<ListPage> {
     'Notification',
   ); // [Hive(Notification) 데이터] 변수 notificationBox로 설정
 
+  // 누적 task 개수에 따른 등급 이모지 반환 함수
+  String getRankEmoji(int taskCount) {
+    if (taskCount >= 200) return "🏆"; // 200개 이상
+    if (taskCount >= 100) return "🥇"; // 100개 이상
+    if (taskCount >= 70) return "🥈"; // 70개 이상
+    if (taskCount >= 50) return "🥉"; // 50개 이상
+    if (taskCount >= 30) return "🔥"; // 30개 이상
+    if (taskCount >= 10) return "⭐"; // 10개 이상
+    if (taskCount >= 1) return "🌳"; // 1개 이상
+    return "🌱"; // 0개
+  }
+
   @override
   void initState() {
     super.initState();
@@ -152,12 +164,50 @@ class _ListPageState extends State<ListPage> {
     // 기존 알림 모두 취소
     flutterLocalNotificationsPlugin.cancelAll();
 
-    // 현재 시간 가져오기
-    // final now = DateTime.now();
+    // // 완료되지 않은 할 일이 있는지 확인
+    // bool hasUncompletedTasks = db.todoList.any((task) => task[1] == false);
 
-    // 새로운 알림 설정 (4시, 9시)
-    scheduleDailyNotification(1, 16, 0, "오늘의 할 일, 지금 잠깐 확인해볼까요? 👀");
-    scheduleDailyNotification(2, 21, 0, "오늘 하루 마무리 전에, 할 일 체크 잊지 마세요 ✅");
+    // // 현재 시간 가져오기
+    // // final now = DateTime.now();
+    // if (hasUncompletedTasks) {
+    //   // 새로운 알림 설정 (4시, 9시)
+    //   scheduleDailyNotification(1, 16, 0, "오늘의 할 일, 지금 잠깐 확인해볼까요? 👀");
+    //   scheduleDailyNotification(2, 21, 0, "오늘 하루 마무리 전에, 할 일 체크 잊지 마세요 ✅");
+
+    //   scheduleDailyNotification(
+    //     3,
+    // DateTime.now().hour,
+    // DateTime.now().minute,
+    //     "3 오늘의 할 일, 지금 잠깐 확인해볼까요? 👀",
+    //   );
+    //   scheduleDailyNotification(
+    //     4,
+    //     DateTime.now().hour,
+    //     DateTime.now().minute + 1,
+    //     "4 오늘 하루 마무리 전에, 할 일 체크 잊지 마세요 ✅",
+    //   );
+    // }
+    // 완료되지 않은 할 일 목록 가져오기
+    List uncompletedTasks =
+        db.todoList
+            .where((task) => task[1] == false)
+            .map((task) => task[0])
+            .toList();
+
+    scheduleDailyNotification(1, 10, 0, "좋은 아침이에요! ☀️\n오늘의 할 일을 정리해볼까요?");
+
+    if (uncompletedTasks.isNotEmpty) {
+      // 완료되지 않은 할 일 목록을 문자열로 변환
+      String taskList = uncompletedTasks.map((task) => "• $task").join("\n");
+
+      // 오후 4시 알림
+      String morningMessage = "아직 완료하지 않은 할 일이 있어요!👀\n\n$taskList";
+      scheduleDailyNotification(2, 16, 0, morningMessage);
+
+      // 오후 9시 알림
+      String eveningMessage = "오늘 마무리 전, 아직 남은 할 일이에요!✅\n\n$taskList";
+      scheduleDailyNotification(3, 21, 0, eveningMessage);
+    }
   }
 
   // D-day 계산
@@ -195,6 +245,7 @@ class _ListPageState extends State<ListPage> {
           title: Text('🎯  목표'),
           content: TextField(
             controller: controller,
+            autofocus: true,
             maxLength: 10,
             decoration: InputDecoration(hintText: '10글자 이하 입력'),
           ),
@@ -267,6 +318,9 @@ class _ListPageState extends State<ListPage> {
     });
     db.updateDataBase();
 
+    // 알림 설정 업데이트
+    setupNotifications();
+
     // 모든 task 완료 시 축하메시지
     checkAllTasksCompleted();
   }
@@ -324,12 +378,12 @@ class _ListPageState extends State<ListPage> {
 
   // 새로운 task 생성
   void createNewTask() {
-    if (db.todoList.length >= 3) {
+    if (db.todoList.length >= 6) {
       // 최대 항목 수 제한
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text(
-            "할 일은 최대 3개까지만 추가할 수 있습니다.",
+            "할 일은 최대 6개까지만 추가할 수 있습니다.",
             style: TextStyle(color: Colors.black),
           ),
           duration: Duration(seconds: 2),
@@ -376,17 +430,38 @@ class _ListPageState extends State<ListPage> {
   // 할일 전체 삭제
   void allRemove() {
     int nowCompletedTaskCount = countCompletedTasks(); // 현재 완료된 task 개수 계산
+    // 완료된 task가 없는 경우 알림 표시
+    if (nowCompletedTaskCount == 0) {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text("❗ 알림"),
+            content: Text("완료된 할 일이 없습니다.", textAlign: TextAlign.center),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text("확인"),
+              ),
+            ],
+          );
+        },
+      );
+      return;
+    }
 
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text("🗑️  전체 삭제\n "),
+          title: Text("🗑️  완료된 할 일 삭제\n "),
           content: SizedBox(
             height: 120,
             child: Column(
               children: [
-                Text("모든 항목을 삭제하시겠습니까?\n\n", textAlign: TextAlign.center),
+                Text("완료된 할 일을 삭제하시겠습니까?\n\n", textAlign: TextAlign.center),
                 Text(
                   "📌 현재 완료된 task: $nowCompletedTaskCount\n"
                   "📈 누적 완료된 task: $allcompletedTaskCount + $nowCompletedTaskCount = ${allcompletedTaskCount + nowCompletedTaskCount}",
@@ -411,7 +486,10 @@ class _ListPageState extends State<ListPage> {
                     'allcompletedTaskCount',
                     allcompletedTaskCount,
                   ); // 누적된 task 개수 저장
-                  db.todoList.clear(); // 리스트 전체 삭제
+                  // db.todoList.clear(); // 리스트 전체 삭제
+                  // 완료되지 않은 task만 필터링하여 새로운 리스트 생성
+                  db.todoList =
+                      db.todoList.where((task) => task[1] == false).toList();
                 });
                 db.updateDataBase();
                 Navigator.of(context).pop(); // 다이얼로그 닫기
@@ -499,8 +577,8 @@ class _ListPageState extends State<ListPage> {
             children: [
               SizedBox(height: 30),
               Container(
-                height: 230,
-                width: 230,
+                height: 120,
+                width: 350,
                 decoration: BoxDecoration(
                   color: Colors.blue[300],
                   borderRadius: BorderRadius.circular(16),
@@ -512,26 +590,26 @@ class _ListPageState extends State<ListPage> {
                     ),
                   ],
                 ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    SizedBox(height: 30),
+                    SizedBox(width: 10),
                     Text(
                       myGoal,
                       style: TextStyle(
-                        fontSize: 25,
+                        fontSize: 30,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
-                    SizedBox(height: 30),
+                    SizedBox(width: 20),
                     Text(
                       selectedDate == null ? "D-Day !!" : calculateDday(),
                       style: TextStyle(
-                        fontSize: 26,
-                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                        fontWeight: FontWeight.w500,
                       ),
                     ),
-                    SizedBox(height: 30),
+                    SizedBox(width: 10),
                   ],
                 ),
               ),
@@ -558,13 +636,19 @@ class _ListPageState extends State<ListPage> {
                   ),
                 ],
               ),
-              SizedBox(height: 70),
-              Text(
-                "🏆 누적 task 완료 : $allcompletedTaskCount",
-                style: const TextStyle(
-                  fontWeight: FontWeight.w600,
-                  fontSize: 18,
-                ),
+              SizedBox(height: 50),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  // Text 위젯 부분 수정
+                  Text(
+                    "${getRankEmoji(allcompletedTaskCount)}  누적 task 완료 : $allcompletedTaskCount",
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 18,
+                    ),
+                  ),
+                ],
               ),
               SizedBox(height: 20),
               Row(
